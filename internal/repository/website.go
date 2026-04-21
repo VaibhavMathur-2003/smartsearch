@@ -18,8 +18,8 @@ func NewWebsiteRepository(db *gorm.DB) *WebsiteRepository {
 
 func (wr *WebsiteRepository) Create(ctx context.Context, d domain.Website) error {
 	m := models.Website{
-		UrlID: d.UrlID,
-		Text:  d.Text,
+		Url:  d.Url,
+		Text: d.Text,
 	}
 	if err := wr.db.WithContext(ctx).Create(&m).Error; err != nil {
 		return err

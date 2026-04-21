@@ -9,7 +9,9 @@ import (
 )
 
 func Scrape(url string) *string {
-	c := colly.NewCollector()
+	c := colly.NewCollector(
+		colly.Async(true),
+	)
 
 	var result *string
 
@@ -23,6 +25,8 @@ func Scrape(url string) *string {
 		fmt.Println("Error:", err)
 		return nil
 	}
+
+	c.Wait()
 
 	return result
 }
