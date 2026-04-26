@@ -1,4 +1,4 @@
-package repo
+package searchrepo
 
 import (
 	"context"
@@ -9,18 +9,18 @@ import (
 	"gorm.io/gorm"
 )
 
-type UrlRepository struct {
+type SearchRepository struct {
 	db *gorm.DB
 }
 
-func NewUrlRepository(db *gorm.DB) *UrlRepository {
-	return &UrlRepository{db: db}
+func NewSearchRepository(db *gorm.DB) *SearchRepository {
+	return &SearchRepository{db: db}
 }
 
-func (ur *UrlRepository) Create(ctx context.Context, d *domain.Searx) error {
+func (ur *SearchRepository) Create(ctx context.Context, d *domain.Searx) error {
 	for _, item := range d.UrlData {
 		m := models.Urls{
-			Domain:  utils.ExtractDomain(item.Url), // optional helper
+			Domain:  utils.ExtractDomain(item.Url),
 			Url:     item.Url,
 			Title:   item.Title,
 			Content: item.Content,
@@ -33,7 +33,7 @@ func (ur *UrlRepository) Create(ctx context.Context, d *domain.Searx) error {
 	return nil
 }
 
-func (ur *UrlRepository) Get(ctx context.Context, website string) ([]string, error) {
+func (ur *SearchRepository) Get(ctx context.Context, website string) ([]string, error) {
 	var urls []string
 
 	err := ur.db.WithContext(ctx).

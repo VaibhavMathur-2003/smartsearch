@@ -8,6 +8,7 @@ import (
 	"smartsearch/internal/models"
 	"smartsearch/internal/pipeline"
 	repo "smartsearch/internal/repository"
+	searchrepo "smartsearch/internal/repository/search"
 )
 
 func main() {
@@ -22,7 +23,7 @@ func main() {
 	if err != nil {
 		log.Fatal("migration failed:", err)
 	}
-	urlRpo := repo.NewUrlRepository(db)
+	urlRpo := searchrepo.NewSearchRepository(db)
 	websiteRepo := repo.NewWebsiteRepository(db)
 	summaryRepo := repo.NewSummaryRepository(db)
 

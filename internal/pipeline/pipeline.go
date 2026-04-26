@@ -9,16 +9,17 @@ import (
 	"smartsearch/internal/pipeline/scrape"
 	"smartsearch/internal/pipeline/searx"
 	repo "smartsearch/internal/repository"
+	searchrepo "smartsearch/internal/repository/search"
 	"sync"
 )
 
 type Pipeline struct {
-	urlRepo     *repo.UrlRepository
+	urlRepo     *searchrepo.SearchRepository
 	websiteRepo *repo.WebsiteRepository
 	summaryRepo *repo.SummaryRepository
 }
 
-func NewPipeline(urlRepo *repo.UrlRepository, websiteRepo *repo.WebsiteRepository, summaryRepo *repo.SummaryRepository) *Pipeline {
+func NewPipeline(urlRepo *searchrepo.SearchRepository, websiteRepo *repo.WebsiteRepository, summaryRepo *repo.SummaryRepository) *Pipeline {
 	return &Pipeline{urlRepo: urlRepo,
 		websiteRepo: websiteRepo, summaryRepo: summaryRepo}
 }
