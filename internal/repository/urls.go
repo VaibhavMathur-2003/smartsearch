@@ -2,7 +2,7 @@ package repo
 
 import (
 	"context"
-	"smartsearch/internal/domain"
+	domain "smartsearch/internal/entities"
 	"smartsearch/internal/models"
 	utils "smartsearch/internal/utils"
 

@@ -1,4 +1,4 @@
-package models
+package entities
 
 type Summary struct {
 	ID      int    `json:"id"`

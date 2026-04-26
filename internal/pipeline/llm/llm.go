@@ -7,15 +7,17 @@ import (
 	"github.com/ollama/ollama/api"
 )
 
-func LlmCall(ctx context.Context, model string, systemPrompt string, userPrompt string) {
+func LlmCall(ctx context.Context, model string, systemPrompt string, userPrompt string) (string, error) {
 	client, err := api.ClientFromEnvironment()
+	stream := false
 	req := &api.GenerateRequest{
-		Model:  "llama3",
-		Prompt: "Write a short poem about Go programming.",
-		Stream: nil, // default streaming
+		Model:  model,
+		Prompt: userPrompt,
+		Stream: &stream, // default streaming
 	}
+	response := ""
 	err = client.Generate(ctx, req, func(resp api.GenerateResponse) error {
-		fmt.Print(resp.Response)
+		response = resp.Response
 		if resp.Done {
 			fmt.Println("\n[Generation complete]")
 		}
@@ -24,4 +26,5 @@ func LlmCall(ctx context.Context, model string, systemPrompt string, userPrompt 
 	if err != nil {
 		panic(err)
 	}
+	return response, nil
 }
