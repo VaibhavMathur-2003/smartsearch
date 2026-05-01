@@ -2,8 +2,7 @@ package searchrepo
 
 import (
 	"context"
-	domain "smartsearch/internal/entities"
-	"smartsearch/internal/models"
+	domain "smartsearch/internal/domain/search"
 	utils "smartsearch/internal/utils"
 
 	"gorm.io/gorm"
@@ -17,11 +16,11 @@ func NewSearchRepository(db *gorm.DB) *SearchRepository {
 	return &SearchRepository{db: db}
 }
 
-func (ur *SearchRepository) Create(ctx context.Context, d *domain.Searx) error {
-	for _, item := range d.UrlData {
-		m := models.Urls{
-			Domain:  utils.ExtractDomain(item.Url),
-			Url:     item.Url,
+func (ur *SearchRepository) Create(ctx context.Context, d *domain.SearchResponse) error {
+	for _, item := range d.Results {
+		m := Urls{
+			Domain:  utils.ExtractDomain(item.URL),
+			URL:     item.URL,
 			Title:   item.Title,
 			Content: item.Content,
 		}
@@ -37,7 +36,7 @@ func (ur *SearchRepository) Get(ctx context.Context, website string) ([]string, 
 	var urls []string
 
 	err := ur.db.WithContext(ctx).
-		Model(&models.Urls{}).
+		Model(&Urls{}).
 		Where("domain = ?", utils.ExtractDomain(website)).
 		Pluck("url", &urls).Error
 

@@ -1,9 +1,8 @@
-package repo
+package summary
 
 import (
 	"context"
-	domain "smartsearch/internal/entities"
-	"smartsearch/internal/models"
+	domain "smartsearch/internal/domain/summary"
 
 	"gorm.io/gorm"
 )
@@ -16,9 +15,9 @@ func NewSummaryRepository(db *gorm.DB) *SummaryRepository {
 	return &SummaryRepository{db: db}
 }
 
-func (wr *SummaryRepository) Create(ctx context.Context, d domain.Summary) error {
-	m := models.Summary{
-		Url:     d.Url,
+func (wr *SummaryRepository) Create(ctx context.Context, d *domain.SummaryResponse) error {
+	m := Summary{
+		URL:     d.URL,
 		Summary: d.Summary,
 	}
 	if err := wr.db.WithContext(ctx).Create(&m).Error; err != nil {
